@@ -5,7 +5,7 @@ function MainLayout({children}){
     return(
         <div className="relative min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-grow">
+            <main className="grow">
                 {children}
             </main>
             <Footer />
