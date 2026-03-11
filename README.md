@@ -1,4 +1,4 @@
-# WebsiteAuto Project
+[ERD.drawio](https://github.com/user-attachments/files/25865637/ERD.drawio)# WebsiteAuto Project
 
 Platform marketplace untuk **menjual website, template, dan jasa programmer**.
 Project ini menggunakan arsitektur **Fullstack**:
@@ -257,4 +257,154 @@ File tersebut sudah difilter menggunakan `.gitignore`.
 # 12. License
 
 Project ini dibuat untuk kebutuhan pengembangan dan pembelajaran.
+
+---
+
+# 13. ERD
+
+```
+classDiagram
+    class users {
+        +int id PK
+        +string name
+        +string email
+        +string password
+        +enum role
+        +string phone
+        +text address
+        +timestamp created_at
+        +timestamp updated_at
+    }
+
+    class products {
+        +int id PK
+        +string name
+        +string slug
+        +text description
+        +decimal price
+        +enum type
+        +int stock
+        +string file_path
+        +string image_url
+        +bool is_active
+        +json attributes
+        +timestamp created_at
+        +timestamp updated_at
+    }
+
+    class categories {
+        +int id PK
+        +string name
+        +string slug
+        +text description
+        +int parent_id FK
+        +timestamp created_at
+        +timestamp updated_at
+    }
+
+    class product_categories {
+        +int product_id FK
+        +int category_id FK
+    }
+
+    class orders {
+        +int id PK
+        +string order_number
+        +int user_id FK
+        +decimal total_amount
+        +enum status
+        +enum payment_status
+        +text notes
+        +int coupon_id FK
+        +timestamp created_at
+        +timestamp updated_at
+    }
+
+    class order_items {
+        +int id PK
+        +int order_id FK
+        +int product_id FK
+        +int quantity
+        +decimal price
+        +decimal subtotal
+        +timestamp created_at
+    }
+
+    class payments {
+        +int id PK
+        +int order_id FK
+        +string payment_method
+        +string transaction_id
+        +decimal amount
+        +enum status
+        +timestamp paid_at
+        +timestamp created_at
+    }
+
+    class reviews {
+        +int id PK
+        +int user_id FK
+        +int product_id FK
+        +tinyint rating
+        +text comment
+        +timestamp created_at
+    }
+
+    class carts {
+        +int id PK
+        +int user_id FK
+        +string session_id
+        +timestamp created_at
+        +timestamp updated_at
+    }
+
+    class cart_items {
+        +int id PK
+        +int cart_id FK
+        +int product_id FK
+        +int quantity
+        +timestamp added_at
+    }
+
+    class coupons {
+        +int id PK
+        +string code
+        +enum discount_type
+        +decimal discount_value
+        +datetime valid_from
+        +datetime valid_until
+        +int usage_limit
+        +int used_count
+        +timestamp created_at
+        +timestamp updated_at
+    }
+
+    %% ========== RELASI ==========
+    users "1" -- "0..*" orders : places
+    users "1" -- "0..*" reviews : writes
+    users "1" -- "0..1" carts : has
+
+    orders "1" -- "1..*" order_items : contains
+    orders "1" -- "1" payments : has
+    orders "0..1" -- "1" coupons : uses   ' sebenarnya coupons "1" -- "0..*" orders lebih tepat, lihat di bawah
+
+    products "1" -- "0..*" order_items : appears_in
+    products "1" -- "0..*" reviews : receives
+    products "1" -- "0..*" product_categories : categorized_in
+    products "1" -- "0..*" cart_items : included_in
+
+    categories "1" -- "0..*" categories : parent   ' relasi rekursif
+    categories "1" -- "0..*" product_categories : contains
+
+    product_categories "1" -- "1" products : ""
+    product_categories "1" -- "1" categories : ""
+
+    carts "1" -- "1..*" cart_items : contains
+    cart_items "1" -- "1" products : refers_to
+
+    coupons "1" -- "0..*" orders : used_in
+```
+* Cara menambahkanya dengan melalui menu Arrange > Insert > Advanced > Mermaid.
+
+
 
