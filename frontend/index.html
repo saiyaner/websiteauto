@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebFlowX | Premium SaaS Templates</title>
+    <title>WebsiteAuto</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
@@ -35,6 +35,14 @@
         }
         .hero-gradient {
             background: radial-gradient(circle at 50% 50%, rgba(13, 51, 242, 0.15) 0%, transparent 50%);
+        }
+        /* Mobile Drawer Logic */
+        #mobile-menu-checkbox:checked ~ aside {
+            transform: translateX(0);
+        }
+        #mobile-menu-checkbox:checked ~ .menu-overlay {
+            opacity: 1;
+            pointer-events: auto;
         }
     </style>
 </head>
